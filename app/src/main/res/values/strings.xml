@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">CheetahCart</string>
     <string name="price">%s/</string>
+    <string name="filter">Filter</string>
+    <string name="totalAmount">Total amount:  %s</string>
 </resources>

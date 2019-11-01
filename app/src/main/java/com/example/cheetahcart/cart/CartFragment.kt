@@ -13,6 +13,7 @@ import com.example.cheetahcart.R
 import com.example.cheetahcart.cart.adapter.CartAdapter
 import com.example.cheetahcart.cart.model.CartUiModel
 import kotlinx.android.synthetic.main.fragment_cart.*
+import kotlinx.android.synthetic.main.view_cart_info.view.*
 
 class CartFragment : Fragment() {
 
@@ -31,7 +32,17 @@ class CartFragment : Fragment() {
         initViewModel()
         initObservers()
         setRecyclerView()
+        setFilterBtn()
 
+    }
+
+    private fun setFilterBtn() {
+        cart_info.filter.setOnClickListener {
+            onFilterClicked()
+        }
+    }
+
+    private fun onFilterClicked() {
     }
 
     private fun setRecyclerView() {
@@ -57,6 +68,7 @@ class CartFragment : Fragment() {
     }
 
     private fun setTotalCartValue(amount: String) {
+        cart_info.total_amount.text = getString(R.string.totalAmount,amount)
 
     }
 

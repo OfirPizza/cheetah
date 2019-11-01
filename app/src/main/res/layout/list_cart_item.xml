@@ -1,6 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:layout_margin="10dp">
 
-</LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/product_img"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:paddingEnd="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_image" />
+
+
+    <TextView
+        android:id="@+id/product_name"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="left"
+        android:maxLines="1"
+        android:paddingTop="10dp"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@id/product_img"
+        app:layout_constraintStart_toEndOf="@id/product_img"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Product Name" />
+
+
+    <TextView
+        android:id="@+id/product_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="start"
+        android:paddingTop="2dp"
+        android:textAlignment="center"
+        android:textSize="12dp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@id/product_img"
+        app:layout_constraintTop_toBottomOf="@id/product_name"
+        tools:text="$12/" />
+
+
+    <TextView
+        android:id="@+id/product_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="start"
+        android:paddingTop="2dp"
+        android:textAlignment="center"
+        android:textColor="@color/green"
+        android:textSize="12dp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@id/product_price"
+        app:layout_constraintTop_toBottomOf="@id/product_name"
+        tools:text="Unit" />
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/substitutable_img"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_substitutable"
+        app:layout_constraintLeft_toRightOf="@id/product_img"
+        app:layout_constraintTop_toBottomOf="@id/product_price" />
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card"
+        android:layout_width="70dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/subTotal_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|top"
+            android:paddingTop="8dp"
+            android:textColor="@color/green"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            tools:text="$12" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@color/gray" />
+
+
+        <TextView
+            android:id="@+id/quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|bottom"
+            android:paddingBottom="8dp"
+            android:textSize="12dp"
+            android:textStyle="bold"
+            tools:text="$12" />
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

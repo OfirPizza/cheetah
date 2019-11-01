@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CheetahCart</string>
+    <string name="price">%s/</string>
 </resources>

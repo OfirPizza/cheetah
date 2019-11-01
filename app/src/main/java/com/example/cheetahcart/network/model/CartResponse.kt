@@ -43,12 +43,15 @@ data class ProductItemInfo(
     @SerializedName("pack_photo_file")
     val packImageUrl: String,
 
+    @SerializedName("weight_photo_filename")
+    val weightImageUrl: String,
+
     @SerializedName("unit_price")
-    val unitPrice: Int,
+    val unitPrice: Long,
 
     @SerializedName("case_price")
-    val casePrice: Int,
+    val casePrice: Long,
 
     @SerializedName("weight_price")
-    val weightPrice: Int
+    val weightPrice: Long
 )

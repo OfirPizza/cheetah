@@ -20,6 +20,8 @@ class CartViewModel : ViewModel() {
     private val TAG = CartViewModel::class.java.simpleName
     private var disposable: Disposable? = null
     val productListLiveData = MutableLiveData<List<CartUiModel>>()
+    val productSearchListLiveData = MutableLiveData<List<CartUiModel>>()
+    val productFilteredListLiveData = MutableLiveData<List<CartUiModel>>()
     val cartTotalValueLiveData = MutableLiveData<String>()
 
 
@@ -87,14 +89,28 @@ class CartViewModel : ViewModel() {
         disposable?.dispose()
     }
 
-    fun filterData(showHighestFirst: Boolean) {
+    fun filterData(showHighestFirst: Boolean, itemList: List<CartUiModel>?) {
         val numberFormat = NumberFormat.getCurrencyInstance(Locale.US)
-        productListLiveData.value?.let {
-            var sorted = it.sortedWith(compareByDescending { obj -> numberFormat.parse(obj.subTotal)?.toDouble() })
+        itemList?.let {
+            var sorted = it.sortedWith(compareByDescending { obj ->
+                numberFormat.parse(obj.subTotal)?.toDouble()
+            })
             if (!showHighestFirst) sorted = sorted.reversed()
-            productListLiveData.postValue(sorted)
+            productFilteredListLiveData.postValue(sorted)
         }
 
     }
+
+    fun searchProductByName(query: String) {
+        val resultList = mutableListOf<CartUiModel>()
+
+        productListLiveData.value?.forEach {
+            if (it.name.contains(query, true)) {
+                resultList.add(it)
+            }
+        }
+        productSearchListLiveData.postValue(resultList)
+    }
+
 
 }

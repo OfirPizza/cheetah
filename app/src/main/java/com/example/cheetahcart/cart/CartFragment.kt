@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -16,6 +17,9 @@ import com.example.cheetahcart.cart.adapter.CartAdapter
 import com.example.cheetahcart.cart.model.CartUiModel
 import kotlinx.android.synthetic.main.fragment_cart.*
 import kotlinx.android.synthetic.main.view_cart_info.view.*
+import kotlinx.android.synthetic.main.view_tool_bar.*
+import kotlinx.android.synthetic.main.view_tool_bar.view.*
+
 
 class CartFragment : Fragment() {
 
@@ -33,9 +37,44 @@ class CartFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
         initObservers()
+        initViews()
+
+    }
+
+    private fun initViews() {
+        setAppBar()
         setRecyclerView()
         setFilterBtn()
+    }
 
+    private fun setAppBar() {
+        appBar.searchView.setOnSearchClickListener { setAppBarNameVisibility(View.GONE) }
+        appBar.searchView.setOnCloseListener {
+            setAppBarNameVisibility(View.VISIBLE)
+            setToOriginalProductList()
+            false
+        }
+
+        appBar.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextSubmit(query: String): Boolean {
+
+                cartViewModel?.searchProductByName(query)
+
+                return false
+            }
+        })
+    }
+
+    private fun setToOriginalProductList() {
+        cartViewModel?.productListLiveData?.value?.let { onProductsReceived(it) }
+    }
+
+    private fun setAppBarNameVisibility(visibility: Int) {
+        appBar_name.visibility = visibility
     }
 
     private fun setFilterBtn() {
@@ -54,10 +93,12 @@ class CartFragment : Fragment() {
     private fun onMenuItemClick(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
             R.id.filter_lowest -> {
-                cartViewModel?.filterData(showHighestFirst = false)
+                val products = (cart_recyclerView?.adapter as? CartAdapter)?.getProducts()
+                cartViewModel?.filterData(showHighestFirst = false, itemList = products)
             }
             R.id.filter_highest -> {
-                cartViewModel?.filterData(showHighestFirst = true)
+                val products = (cart_recyclerView?.adapter as? CartAdapter)?.getProducts()
+                cartViewModel?.filterData(showHighestFirst = true, itemList = products)
             }
         }
         return true
@@ -80,6 +121,10 @@ class CartFragment : Fragment() {
     private fun initObservers() {
         cartViewModel?.cartTotalValueLiveData?.observe(this, Observer { setTotalCartValue(it) })
         cartViewModel?.productListLiveData?.observe(this, Observer { onProductsReceived(it) })
+        cartViewModel?.productSearchListLiveData?.observe(this, Observer { onProductsReceived(it) })
+        cartViewModel?.productFilteredListLiveData?.observe(
+            this,
+            Observer { onProductsReceived(it) })
     }
 
     private fun onProductsReceived(products: List<CartUiModel>) {

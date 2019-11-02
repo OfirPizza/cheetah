@@ -25,6 +25,10 @@ class CartAdapter(private val products: List<CartUiModel>) :
         return products.size
     }
 
+    fun getProducts(): List<CartUiModel> {
+        return products
+    }
+
     override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
         holder.bind(products[position])
     }
@@ -37,7 +41,8 @@ class CartAdapter(private val products: List<CartUiModel>) :
             setSubstitutable(cartUiModel.isSubstitutable)
 
             itemView.product_name.text = cartUiModel.name
-            itemView.product_price.text = itemView.resources.getString(R.string.price, cartUiModel.unitPrice)
+            itemView.product_price.text =
+                itemView.resources.getString(R.string.price, cartUiModel.unitPrice)
             itemView.subTotal_price.text = cartUiModel.subTotal
             itemView.quantity.text = cartUiModel.quantity
             itemView.product_unit.text = cartUiModel.unitType
@@ -45,7 +50,10 @@ class CartAdapter(private val products: List<CartUiModel>) :
 
 
         private fun setSubstitutable(substitutable: Boolean) {
-            val color = if (substitutable) itemView.resources.getColor(R.color.green, null) else itemView.resources.getColor(R.color.white, null)
+            val color = if (substitutable) itemView.resources.getColor(
+                R.color.green,
+                null
+            ) else itemView.resources.getColor(R.color.white, null)
             itemView.substitutable_img.setBackgroundColor(color)
         }
 

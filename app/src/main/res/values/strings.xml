@@ -3,4 +3,7 @@
     <string name="price">%s/</string>
     <string name="filter">Filter</string>
     <string name="totalAmount">Total amount:  %s</string>
+    <string name="done">Done</string>
+    <string name="show_highest_price_first">Show highest price first</string>
+    <string name="show_lowest_price_first">Show lowest price first</string>
 </resources>

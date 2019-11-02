@@ -1,6 +1,6 @@
 package com.example.cheetahcart.cart.model
 
-class CartUiModel(
+data class CartUiModel(
     val name: String,
     val unitPrice: String,
     val unitType: String,

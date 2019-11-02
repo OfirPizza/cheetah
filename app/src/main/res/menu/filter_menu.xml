@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/filter_highest"
+        android:title="@string/show_highest_price_first" />
+
+    <item
+        android:id="@+id/filter_lowest"
+        android:title="@string/show_lowest_price_first" />
+
+</menu>

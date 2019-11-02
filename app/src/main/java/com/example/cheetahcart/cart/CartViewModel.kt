@@ -87,4 +87,14 @@ class CartViewModel : ViewModel() {
         disposable?.dispose()
     }
 
+    fun filterData(showHighestFirst: Boolean) {
+        val numberFormat = NumberFormat.getCurrencyInstance(Locale.US)
+        productListLiveData.value?.let {
+            var sorted = it.sortedWith(compareByDescending { obj -> numberFormat.parse(obj.subTotal)?.toDouble() })
+            if (!showHighestFirst) sorted = sorted.reversed()
+            productListLiveData.postValue(sorted)
+        }
+
+    }
+
 }

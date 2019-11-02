@@ -3,8 +3,10 @@ package com.example.cheetahcart.cart
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -43,6 +45,23 @@ class CartFragment : Fragment() {
     }
 
     private fun onFilterClicked() {
+        val popupMenu = PopupMenu(requireContext(), cart_info.filter)
+        popupMenu.menuInflater.inflate(R.menu.filter_menu, popupMenu.menu)
+        popupMenu.setOnMenuItemClickListener { onMenuItemClick(it) }
+        popupMenu.show()
+    }
+
+    private fun onMenuItemClick(menuItem: MenuItem): Boolean {
+        when (menuItem.itemId) {
+            R.id.filter_lowest -> {
+                cartViewModel?.filterData(showHighestFirst = false)
+            }
+            R.id.filter_highest -> {
+                cartViewModel?.filterData(showHighestFirst = true)
+            }
+        }
+        return true
+
     }
 
     private fun setRecyclerView() {

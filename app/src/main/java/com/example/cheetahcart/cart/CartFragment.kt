@@ -122,9 +122,12 @@ class CartFragment : Fragment() {
         cartViewModel?.cartTotalValueLiveData?.observe(this, Observer { setTotalCartValue(it) })
         cartViewModel?.productListLiveData?.observe(this, Observer { onProductsReceived(it) })
         cartViewModel?.productSearchListLiveData?.observe(this, Observer { onProductsReceived(it) })
-        cartViewModel?.productFilteredListLiveData?.observe(
-            this,
-            Observer { onProductsReceived(it) })
+        cartViewModel?.productFilteredListLiveData?.observe(this, Observer { onProductsReceived(it) })
+        cartViewModel?.getNetworkLiveData()?.observe(this, Observer { onNetworkChange(it)})
+    }
+
+    private fun onNetworkChange(connection: Boolean) {
+        if (connection) cartViewModel?.getCart()
     }
 
     private fun onProductsReceived(products: List<CartUiModel>) {

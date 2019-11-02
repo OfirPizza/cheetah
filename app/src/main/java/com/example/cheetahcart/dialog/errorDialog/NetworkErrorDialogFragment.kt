@@ -5,19 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.ViewModelProviders
 import com.example.cheetahcart.R
+import kotlinx.android.synthetic.main.fragment_network_error_dialog.*
 
 class NetworkErrorDialogFragment : DialogFragment() {
-
-    private lateinit var networkErrorDialogViewModel: NetworkErrorDialogViewModel
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        initViewModel()
-    }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,21 +25,10 @@ class NetworkErrorDialogFragment : DialogFragment() {
         initViews()
     }
 
-
-    private fun initViewModel() {
-        networkErrorDialogViewModel =
-            ViewModelProviders.of(this).get(NetworkErrorDialogViewModel::class.java)
-    }
-
-
     private fun initViews() {
-        setErrorText()
-        setBtn()
+        btn_ok.setOnClickListener { requireActivity().finish() }
     }
 
-    private fun setBtn() {
-    }
-
-    private fun setErrorText() {
-    }
 }
+
+

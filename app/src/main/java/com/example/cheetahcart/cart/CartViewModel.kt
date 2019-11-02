@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.cheetahcart.cart.model.CartUiModel
 import com.example.cheetahcart.cart.model.ProductUnitType
 import com.example.cheetahcart.data.DataManager
+import com.example.cheetahcart.network.NetworkManager
 import com.example.cheetahcart.network.model.CartResponse
 import com.example.cheetahcart.network.model.Product
 import io.reactivex.disposables.Disposable
@@ -30,13 +31,19 @@ class CartViewModel : ViewModel() {
     }
 
 
-    private fun getCart() {
+    fun getCart() {
         disposable = DataManager.INSTANCE.getCart()
             .subscribeOn(Schedulers.io())
             .subscribeBy(
                 onError = { postGetCartFailed(it) },
                 onSuccess = { postGetCart(it) }
             )
+
+    }
+
+
+    fun getNetworkLiveData(): MutableLiveData<Boolean> {
+        return NetworkManager.INSTANCE.isNetworkAvailable
 
     }
 
@@ -75,8 +82,7 @@ class CartViewModel : ViewModel() {
 
 
     private fun centsToDollar(cents: Long): String {
-        val numberFormat = NumberFormat.getCurrencyInstance(Locale.US)
-        return numberFormat.format(cents / 100.0)
+        return DataManager.INSTANCE.centsToDollar(cents)
     }
 
     private fun postGetCartFailed(ex: Throwable) {

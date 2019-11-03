@@ -8,8 +8,6 @@ import java.util.*
 
 
 class DataManager {
-    private val TAG = DataManager::class.java.simpleName
-
 
     companion object {
         val INSTANCE = DataManager()

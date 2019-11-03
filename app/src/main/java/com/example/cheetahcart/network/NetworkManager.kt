@@ -7,9 +7,8 @@ import com.example.cheetahcart.network.model.CartResponse
 import io.reactivex.Single
 
 class NetworkManager : ConnectivityManager.NetworkCallback() {
-    private val TAG = NetworkManager::class.java.simpleName
 
-
+    private  var connectivityManager: ConnectivityManager? = null
     val isNetworkAvailable = MutableLiveData<Boolean>()
 
     companion object {
@@ -26,10 +25,9 @@ class NetworkManager : ConnectivityManager.NetworkCallback() {
         val networkRequest =
             NetworkRequest.Builder().addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
                 .addTransportType(NetworkCapabilities.TRANSPORT_WIFI).build()
-        val connectivityManager =
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        connectivityManager.registerNetworkCallback(networkRequest, this)
-        checkCurrentConnection(connectivityManager.activeNetworkInfo)
+        connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        connectivityManager?.registerNetworkCallback(networkRequest, this)
+        checkCurrentConnection(connectivityManager?.activeNetworkInfo)
     }
 
     fun disable(context: Context) {
@@ -49,8 +47,9 @@ class NetworkManager : ConnectivityManager.NetworkCallback() {
         postNetworkStatus(true)
     }
 
+
     override fun onLost(network: Network) {
-        postNetworkStatus(false)
+     checkCurrentConnection(connectivityManager?.activeNetworkInfo)
     }
 
     private fun postNetworkStatus(haveInternet: Boolean) {
